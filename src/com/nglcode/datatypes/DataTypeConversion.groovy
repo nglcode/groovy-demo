@@ -1,4 +1,4 @@
-package com.nglcode.classandobjects
+package com.nglcode.datatypes
 
 class DataTypeConversion {
 
