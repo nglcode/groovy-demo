@@ -38,7 +38,7 @@ class StringMethods {
         println("Trim: " + str5.trim())
         println("Split array: " + str6.split(" "))
         println("Split element: " + str6.split(" ")[0])
-        
+
     }
 
 
