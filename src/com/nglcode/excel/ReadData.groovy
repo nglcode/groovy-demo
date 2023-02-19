@@ -24,7 +24,19 @@ class ReadData {
         def dateCreated = cell.getDateCellValue()
         println("Date 1-2: ${dateCreated}")
 
-        
+        println("=============================")
+
+        def eat = new ExcelApiTest("src/com/nglcode/files/TestData.xlsx")
+        userName = eat.getCellData("Credentials", 1, 2)
+        println("Username 2-1: ${userName}")
+
+        numOfAttempts = eat.getCellData("Credentials", 4, 2)
+        println("NumOfAttempts 2-4: ${numOfAttempts}")
+
+        dateCreated = eat.getCellData("Credentials", 3, 2)
+        println("Date 2-3: ${dateCreated}")
+
+
 
     }
 }
