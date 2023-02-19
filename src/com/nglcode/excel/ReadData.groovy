@@ -36,6 +36,35 @@ class ReadData {
         dateCreated = eat.getCellData("Credentials", 3, 2)
         println("Date 2-3: ${dateCreated}")
 
+        println("=============================")
+
+        row = sheet.getRow(0)
+        def colNum = -1
+
+        for (i in 0..row.getLastCellNum() -1 ) {
+            if (row.getCell(i).getStringCellValue().trim() == "PassWord") {
+                colNum = i
+                break
+            }
+        }
+
+        row = sheet.getRow(1)
+        cell = row.getCell(colNum)
+        def passWord = cell.getStringCellValue()
+        println("Password from Excel is: ${passWord}")
+
+        println("=============================")
+
+        eat = new ExcelApiTest("src/com/nglcode/files/TestData.xlsx")
+        userName = eat.getCellData("Credentials", "UserName", 2)
+        println("Username 2nd Row: ${userName}")
+
+        int noOfAttempts = eat.getCellData("Credentials", "NoOfAttempts", 2)
+        println("noOfAttempts 2nd Row: ${noOfAttempts}")
+
+        dateCreated = eat.getCellData("Credentials", "DateCreated", 2)
+        println("dateCreated 2nd Row: ${dateCreated}")
+
 
 
     }

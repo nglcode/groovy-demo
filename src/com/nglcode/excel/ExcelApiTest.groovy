@@ -77,6 +77,54 @@ class ExcelApiTest {
         }
     }
 
+    def getCellData(sheetName, String colName, int rowNum) {
+
+        try {
+            int colNum = -1
+            sheet = workbook.getSheet(sheetName)
+            row = sheet.getRow(0)
+            def cellValue
+
+            for (i in 0..row.getLastCellNum() -1 ) {
+                if (row.getCell(i).getStringCellValue().trim() == colName) {
+                    colNum = i
+                    break
+                }
+            }
+
+            row = sheet.getRow(rowNum - 1)
+            cell = row.getCell(colNum)
+
+            println("Celltype: ${cell.getCellType()}")
+
+            switch (cell.getCellType()) {
+                case CellType.STRING:
+                    cellValue = cell.getStringCellValue()
+                    break
+                case {CellType.NUMERIC || CellType.FORMULA}:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        DateFormat df = new SimpleDateFormat("dd/MM/yy")
+                        Date date = cell.getDateCellValue()
+                        cellValue = df.format(date)
+                    } else {
+                        cellValue = cell.getNumericCellValue()
+                    }
+                    break
+                case CellType.BLANK:
+                    cellValue = ""
+                    break
+                default:
+                    cellValue = cell.getBooleanCellValue()
+                    break
+            }
+            return cellValue
+        } catch (Exception e) {
+            e.printStackTrace()
+            "Row: ${rowNum} or ColName: ${colName} does not exist in the Excel file."
+        }
+
+    }
+
 
 
 
