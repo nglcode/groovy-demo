@@ -24,7 +24,6 @@ class ExcelApiTest {
     def ExcelApiTest(xlsFilePath) {
         this.xlsFilePath = xlsFilePath
         fis = new FileInputStream(xlsFilePath)
-        println("Filepath: ${xlsFilePath}")
         workbook = new XSSFWorkbook(fis)
         fis.close()
     }
@@ -122,6 +121,80 @@ class ExcelApiTest {
             e.printStackTrace()
             "Row: ${rowNum} or ColName: ${colName} does not exist in the Excel file."
         }
+
+    }
+
+    def setCellData(sheetName, int colNum, int rowNum, value) {
+
+        try {
+            sheet = workbook.getSheet(sheetName)
+            row = sheet.getRow(rowNum)
+
+            if (row == null) {
+                row = sheet.createRow(rowNum)
+            }
+
+            cell = row.getCell(colNum)
+
+            if (cell == null) {
+                cell = row.createCell(colNum)
+            }
+
+            cell.setCellValue(value)
+
+            fos = new FileOutputStream(xlsFilePath)
+            workbook.write(fos)
+            fos.close()
+
+            println("Success!")
+
+        } catch (Exception e) {
+            e.printStackTrace()
+            false
+        }
+        true
+
+    }
+
+    def setCellData(sheetName, String colName, int rowNum, value) {
+
+        try {
+            def colNum = -1
+            sheet = workbook.getSheet(sheetName)
+            row = sheet.getRow(0)
+
+            for (i in 0..row.getLastCellNum() -1) {
+                println(row.getCell(i).getStringCellValue().trim())
+                if (row.getCell(i).getStringCellValue().trim() == colName) {
+                    colNum = i
+                }
+            }
+
+            row = sheet.getRow(rowNum)
+
+            if (row == null) {
+                row = sheet.createRow(rowNum)
+            }
+
+            cell = row.getCell(colNum)
+
+            if (cell == null) {
+                cell = row.createCell(colNum)
+            }
+
+            cell.setCellValue(value)
+
+            fos = new FileOutputStream(xlsFilePath)
+            workbook.write(fos)
+            fos.close()
+
+            println("Success!")
+
+        } catch (Exception e) {
+            e.printStackTrace()
+            false
+        }
+        true
 
     }
 
